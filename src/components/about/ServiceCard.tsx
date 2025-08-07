@@ -8,7 +8,7 @@ interface ServiceCardProps {
   index: number;
 }
 
-export default function ServiceCard({ service, index }: ServiceCardProps) {
+export default function ServiceCard({ service }: ServiceCardProps) {
   return (
     <div className="group h-full">
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">

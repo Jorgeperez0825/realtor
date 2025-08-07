@@ -10,7 +10,7 @@ export default function FooterContent() {
         </span>
       </h2>
       <p className="text-gray-300 text-sm leading-relaxed mb-6">
-        Transforming Florida's real estate landscape through innovative technology and personalized service excellence for short-term rental investments.
+        Transforming Florida&apos;s real estate landscape through innovative technology and personalized service excellence for short-term rental investments.
       </p>
       <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
         <div className="flex items-center space-x-3">

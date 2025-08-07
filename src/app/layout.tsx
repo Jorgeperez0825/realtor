@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Transform your real estate investments with Dream Properties. Expert property acquisition, Airbnb setup, guest management, and maintenance services in Florida.",
   keywords: "Florida real estate, Airbnb management, property investment, short-term rentals, property acquisition, guest management, Dream Properties",
   authors: [{ name: "Dream Properties" }],
-  viewport: "width=device-width, initial-scale=1",
+
   metadataBase: new URL("https://getdreamproperties.com"),
   openGraph: {
     title: "Dream Properties | Premium Real Estate & Airbnb Management",

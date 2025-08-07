@@ -39,7 +39,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
 
         {/* Review Text */}
         <blockquote className="text-lg md:text-xl text-gray-700 dark:text-gray-200 leading-relaxed mb-8 text-center font-light italic">
-          "{review.text}"
+          &ldquo;{review.text}&rdquo;
         </blockquote>
 
         {/* Rating */}

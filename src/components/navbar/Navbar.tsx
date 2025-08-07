@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,10 +19,12 @@ export default function Navbar() {
           <div className="flex items-center space-x-3">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
               {/* Dream Properties Logo */}
-              <img 
+              <Image 
                 src="/logo.png" 
                 alt="Dream Properties Logo" 
-                className="w-8 h-8 rounded-lg object-contain"
+                width={32}
+                height={32}
+                className="rounded-lg object-contain"
               />
               <span className="text-white font-semibold text-lg">
                 Dream Properties

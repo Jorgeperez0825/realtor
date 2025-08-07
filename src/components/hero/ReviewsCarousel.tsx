@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+
 
 const reviews = [
   {
@@ -67,7 +67,7 @@ export default function ReviewsCarousel() {
               
               {/* Review Text */}
               <p className="text-white text-sm leading-relaxed mb-4 text-center min-h-[60px]">
-                "{review.text}"
+                &ldquo;{review.text}&rdquo;
               </p>
               
               {/* Author Info */}
@@ -96,7 +96,7 @@ export default function ReviewsCarousel() {
               
               {/* Review Text */}
               <p className="text-white text-sm leading-relaxed mb-4 text-center min-h-[60px]">
-                "{review.text}"
+                &ldquo;{review.text}&rdquo;
               </p>
               
               {/* Author Info */}

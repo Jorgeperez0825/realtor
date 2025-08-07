@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 interface PropertyCardProps {
   property: {
     id: number;
@@ -15,15 +17,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     <div className="group bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
       {/* Property Image */}
       <div className="relative h-48 bg-gray-200 dark:bg-gray-700 overflow-hidden">
-        <img 
+        <Image 
           src={property.image} 
           alt={property.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-            target.nextElementSibling?.classList.remove('hidden');
-          }}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center hidden">
           <div className="text-white text-center">
