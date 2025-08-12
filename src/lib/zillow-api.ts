@@ -214,7 +214,7 @@ class ZillowAPI {
       console.log('📡 Full API response:', data);
       
       // Handle different possible response structures from Zillow API
-      let results: any[] = [];
+      let results: unknown[] = [];
       let totalCount = 0;
       
       if (data.props && Array.isArray(data.props)) {
