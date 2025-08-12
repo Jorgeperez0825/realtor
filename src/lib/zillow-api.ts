@@ -70,7 +70,7 @@ export interface SearchFilters {
   allowsLargeDogs?: boolean;
   
   // Views
-  hasView?: 'mountain' | 'city' | 'water' | 'park' | '';
+  hasView?: 'mountain' | 'city' | 'water' | 'park';
   
   // Rental specific
   availableFrom?: string; // Date string for rental properties
@@ -185,7 +185,7 @@ class ZillowAPI {
     if (filters.allowsLargeDogs) params.large_dogs_allowed = 'true';
 
     // View filters
-    if (filters.hasView && filters.hasView !== '') params.view = filters.hasView;
+    if (filters.hasView) params.view = filters.hasView;
 
     // Rental specific
     if (filters.availableFrom) params.available_from = filters.availableFrom;
@@ -326,7 +326,17 @@ class ZillowAPI {
       zipcode: (property.zipcode || property.zip || '') as string,
       yearBuilt: Number(property.yearBuilt) || undefined,
       lotSize: Number(property.lotSize) || undefined,
-      priceHistory: (property.priceHistory || []) as unknown[]
+      priceHistory: ((property.priceHistory as unknown[]) || []).map((item: unknown) => {
+        if (item && typeof item === 'object') {
+          const historyItem = item as Record<string, unknown>;
+          return {
+            date: (historyItem.date as string) || '',
+            price: Number(historyItem.price) || 0,
+            event: (historyItem.event as string) || ''
+          };
+        }
+        return { date: '', price: 0, event: '' };
+      })
     };
   }
 

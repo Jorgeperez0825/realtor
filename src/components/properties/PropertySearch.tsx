@@ -20,8 +20,9 @@ interface PropertySearchProps {
   resetTrigger?: boolean;
 }
 
-// Local state interface for form handling (extends SearchFilters with string types for form inputs)
-interface LocalSearchFilters extends SearchFilters {
+// Local state interface for form handling (separate from SearchFilters to avoid type conflicts)
+interface LocalSearchFilters {
+  location: string;
   listingType?: string;
   propertyType?: string;
   bedrooms?: string;
@@ -35,7 +36,23 @@ interface LocalSearchFilters extends SearchFilters {
   minYearBuilt?: string;
   maxYearBuilt?: string;
   sortBy?: string;
+  
+  // Amenities
+  hasPool?: boolean;
+  hasAirConditioning?: boolean;
+  onWaterfront?: boolean;
+  hasParking?: boolean;
+  hasLaundry?: boolean;
+  
+  // Pet Policy
+  allowsCats?: boolean;
+  allowsSmallDogs?: boolean;
+  allowsLargeDogs?: boolean;
+  
+  // Views
   hasView?: string;
+  
+  // Rental specific
   availableFrom?: string;
 }
 
@@ -266,9 +283,11 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
         minYearBuilt = parseInt(filters.minYearBuilt.replace('+', ''));
       }
 
-      const searchParams = {
+      const searchParams: SearchFilters = {
         location: filters.location || 'Orlando, FL',
-        listingType: filters.listingType || undefined,
+        listingType: (filters.listingType === 'forSale' || filters.listingType === 'forRent' || filters.listingType === 'sold') 
+          ? filters.listingType 
+          : undefined,
         propertyType: filters.propertyType || undefined,
         minPrice,
         maxPrice,
@@ -280,7 +299,11 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
         maxLotSize,
         minYearBuilt,
         maxYearBuilt,
-        sortBy: filters.sortBy || undefined,
+        sortBy: (filters.sortBy === 'price_asc' || filters.sortBy === 'price_desc' || filters.sortBy === 'newest' || 
+                 filters.sortBy === 'bedrooms' || filters.sortBy === 'bathrooms' || filters.sortBy === 'sqft' || 
+                 filters.sortBy === 'lot_size') 
+          ? filters.sortBy 
+          : undefined,
         
         // Amenities
         hasPool: filters.hasPool || undefined,
@@ -295,7 +318,10 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
         allowsLargeDogs: filters.allowsLargeDogs || undefined,
         
         // Views
-        hasView: filters.hasView || undefined,
+        hasView: (filters.hasView === 'mountain' || filters.hasView === 'city' || filters.hasView === 'water' || 
+                  filters.hasView === 'park') 
+          ? filters.hasView 
+          : undefined,
         
         // Rental specific
         availableFrom: filters.availableFrom || undefined,
