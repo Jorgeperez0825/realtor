@@ -12,51 +12,35 @@ import {
   HeartIcon,
   EyeIcon
 } from '@heroicons/react/24/outline';
-import { zillowAPI, ZillowProperty } from '@/lib/zillow-api';
+import { zillowAPI, ZillowProperty, SearchFilters } from '@/lib/zillow-api';
 import PropertyResults from './PropertyResults';
-
-interface SearchFilters {
-  location: string;
-  listingType: string;
-  propertyType: string;
-  minPrice: string;
-  maxPrice: string;
-  bedrooms: string;
-  bathrooms: string;
-  minSquareFeet: string;
-  maxSquareFeet: string;
-  minLotSize: string;
-  maxLotSize: string;
-  minYearBuilt: string;
-  maxYearBuilt: string;
-  sortBy: string;
-  
-  // Amenities
-  hasPool: boolean;
-  hasAirConditioning: boolean;
-  onWaterfront: boolean;
-  hasParking: boolean;
-  hasLaundry: boolean;
-  
-  // Pet Policy
-  allowsCats: boolean;
-  allowsSmallDogs: boolean;
-  allowsLargeDogs: boolean;
-  
-  // Views
-  hasView: string;
-  
-  // Rental specific
-  availableFrom: string;
-}
 
 interface PropertySearchProps {
   onSearchStateChange?: (hasSearched: boolean) => void;
   resetTrigger?: boolean;
 }
 
+// Local state interface for form handling (extends SearchFilters with string types for form inputs)
+interface LocalSearchFilters extends SearchFilters {
+  listingType?: string;
+  propertyType?: string;
+  bedrooms?: string;
+  bathrooms?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  minSquareFeet?: string;
+  maxSquareFeet?: string;
+  minLotSize?: string;
+  maxLotSize?: string;
+  minYearBuilt?: string;
+  maxYearBuilt?: string;
+  sortBy?: string;
+  hasView?: string;
+  availableFrom?: string;
+}
+
 export default function PropertySearch({ onSearchStateChange, resetTrigger }: PropertySearchProps) {
-  const [filters, setFilters] = useState<SearchFilters>({
+  const [filters, setFilters] = useState<LocalSearchFilters>({
     location: '',
     listingType: '',
     propertyType: '',
@@ -104,7 +88,8 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
         location: '',
         listingType: '',
         propertyType: '',
-        priceRange: '',
+        minPrice: '',
+        maxPrice: '',
         bedrooms: '',
         bathrooms: '',
         minSquareFeet: '',
