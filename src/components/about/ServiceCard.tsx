@@ -1,3 +1,5 @@
+'use client';
+
 interface ServiceCardProps {
   service: {
     title: string;
@@ -9,6 +11,13 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service }: ServiceCardProps) {
+  const openWhatsApp = () => {
+    if (typeof window !== 'undefined') {
+      const message = `Hi! I'm interested in learning more about your ${service.title} service. Can you provide more information?`;
+      const whatsappUrl = `https://wa.me/17864685161?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  };
   return (
     <div className="group h-full">
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">
@@ -39,7 +48,10 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         {/* CTA Button */}
-        <button className={`w-full py-3 px-4 bg-gradient-to-r ${service.gradient} text-white font-medium rounded-lg hover:scale-105 transition-transform duration-300 hover:shadow-lg text-sm mt-auto`}>
+        <button 
+          onClick={openWhatsApp}
+          className={`w-full py-3 px-4 bg-gradient-to-r ${service.gradient} text-white font-medium rounded-lg hover:scale-105 transition-transform duration-300 hover:shadow-lg text-sm mt-auto`}
+        >
           Learn More
         </button>
       </div>

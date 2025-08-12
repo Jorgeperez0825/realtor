@@ -13,6 +13,13 @@ interface PropertyCardProps {
 }
 
 export default function PropertyCard({ property }: PropertyCardProps) {
+  const openWhatsApp = () => {
+    if (typeof window !== 'undefined') {
+      const message = `Hi! I'm interested in learning more about this property: ${property.title}. Can you provide more details?`;
+      const whatsappUrl = `https://wa.me/17864685161?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  };
   return (
     <div className="group bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
       {/* Property Image */}
@@ -58,7 +65,10 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         </div>
 
         {/* Learn More Button */}
-        <button className="w-full py-2 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:scale-105 transition-transform duration-300 text-sm">
+        <button 
+          onClick={openWhatsApp}
+          className="w-full py-2 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg hover:scale-105 transition-transform duration-300 text-sm"
+        >
           Learn More
         </button>
       </div>

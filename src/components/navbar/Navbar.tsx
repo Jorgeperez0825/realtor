@@ -11,6 +11,24 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const scrollToExploreProperties = () => {
+    if (typeof window !== 'undefined') {
+      const exploreSection = document.querySelector('[data-section="explore-properties"]');
+      if (exploreSection) {
+        exploreSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMenuOpen(false);
+  };
+
+  const openWhatsApp = (message: string) => {
+    if (typeof window !== 'undefined') {
+      const whatsappUrl = `https://wa.me/17864685161?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -34,27 +52,24 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link 
-              href="/properties" 
+            <button 
+              onClick={scrollToExploreProperties}
               className="text-white/90 hover:text-white transition-colors text-sm font-medium"
             >
-              Buy/Sell
-            </Link>
-            <Link 
-              href="/airbnb-management" 
+              Buy/Rent
+            </button>
+            <button 
+              onClick={() => openWhatsApp('Hi! I\'m interested in Airbnb management services. Can you provide more information?')}
               className="text-white/90 hover:text-white transition-colors text-sm font-medium"
             >
               Airbnb Management
-            </Link>
-            <Link 
-              href="/portfolio" 
-              className="text-white/90 hover:text-white transition-colors text-sm font-medium"
-            >
-              Your Portfolio
-            </Link>
+            </button>
             
             {/* CTA Button */}
-            <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:scale-105 transition-transform">
+            <button 
+              onClick={() => openWhatsApp('Hi! I\'m interested in real estate investment opportunities. Can you help me get started?')}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:scale-105 transition-transform"
+            >
               Start Investing
             </button>
           </div>
@@ -89,29 +104,23 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-black/20 backdrop-blur-md rounded-lg mt-2">
-              <Link
-                href="/properties"
-                className="block px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md text-sm font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={scrollToExploreProperties}
+                className="block w-full text-left px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md text-sm font-medium transition-colors"
               >
-                Buy/Sell
-              </Link>
-              <Link
-                href="/airbnb-management"
-                className="block px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md text-sm font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
+                Buy/Rent
+              </button>
+              <button
+                onClick={() => openWhatsApp('Hi! I\'m interested in Airbnb management services. Can you provide more information?')}
+                className="block w-full text-left px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md text-sm font-medium transition-colors"
               >
                 Airbnb Management
-              </Link>
-              <Link
-                href="/portfolio"
-                className="block px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-md text-sm font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Your Portfolio
-              </Link>
+              </button>
               <div className="px-3 py-2">
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:scale-105 transition-transform">
+                <button 
+                  onClick={() => openWhatsApp('Hi! I\'m interested in real estate investment opportunities. Can you help me get started?')}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:scale-105 transition-transform"
+                >
                   Start Investing
                 </button>
               </div>

@@ -1,4 +1,13 @@
+'use client';
+
 export default function FooterSocial() {
+  const openWhatsApp = () => {
+    if (typeof window !== 'undefined') {
+      const whatsappUrl = `https://wa.me/17864685161?text=${encodeURIComponent('Hi! I found your contact through Dream Properties website. I\'m interested in your real estate services.')}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  };
+
   return (
     <div>
       <h3 className="text-white font-semibold text-lg mb-6">Contact Us</h3>
@@ -10,10 +19,13 @@ export default function FooterSocial() {
           <p className="text-white text-sm font-medium">info@getdreamproperties.com</p>
         </div>
         
-        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20">
-          <p className="text-gray-300 text-xs mb-1">Phone</p>
-          <p className="text-white text-sm font-medium">+1 (407) 555-0123</p>
-        </div>
+        <button 
+          onClick={openWhatsApp}
+          className="w-full bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-left"
+        >
+          <p className="text-gray-300 text-xs mb-1">Phone / WhatsApp</p>
+          <p className="text-white text-sm font-medium">+1 (786) 468-5161</p>
+        </button>
         
         <div className="bg-white/10 backdrop-blur-md rounded-lg p-3 border border-white/20">
           <p className="text-gray-300 text-xs mb-1">Location</p>
