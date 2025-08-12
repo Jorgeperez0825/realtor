@@ -7,9 +7,18 @@ if (!RAPIDAPI_KEY) {
   console.error('❌ RAPIDAPI_KEY is missing from environment variables');
 }
 
+export type PropertyAddress =
+  | string
+  | {
+      streetAddress?: string;
+      city?: string;
+      state?: string;
+      zipcode?: string;
+    };
+
 export interface ZillowProperty {
   zpid: string;
-  address: string;
+  address: PropertyAddress;
   price: number;
   bedrooms: number;
   bathrooms: number;
@@ -301,7 +310,7 @@ class ZillowAPI {
 
     return {
       zpid: (property.zpid as string)?.toString() || Math.random().toString(),
-      address: (property.address || property.streetAddress || 'Address not available') as string,
+      address: (property.address || property.streetAddress || 'Address not available') as PropertyAddress,
       price: Number(property.price || property.unformattedPrice || property.rentZestimate) || 0,
       bedrooms: Number(property.bedrooms || property.beds) || 0,
       bathrooms: Number(property.bathrooms || property.baths) || 0,
