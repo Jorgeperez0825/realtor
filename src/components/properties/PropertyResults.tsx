@@ -119,7 +119,10 @@ export default function PropertyResults({ properties, loading, totalResults }: P
               {getPropertyImage(property) ? (
                 <Image
                   src={getPropertyImage(property)!}
-                  alt={property.address}
+                  alt={typeof property.address === 'string' 
+                    ? property.address 
+                    : `${property.address?.streetAddress || ''}, ${property.address?.city || ''}, ${property.address?.state || ''}`
+                  }
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
                   onError={() => handleImageError(property.zpid)}
@@ -192,7 +195,10 @@ export default function PropertyResults({ properties, loading, totalResults }: P
               <div className="flex items-start gap-2 mb-3">
                 <MapPinIcon className="h-4 w-4 text-white/60 mt-1 flex-shrink-0" />
                 <p className="text-white/80 text-sm leading-relaxed">
-                  {property.address}
+                  {typeof property.address === 'string' 
+                    ? property.address 
+                    : `${property.address?.streetAddress || ''}, ${property.address?.city || ''}, ${property.address?.state || ''} ${property.address?.zipcode || ''}`
+                  }
                 </p>
               </div>
 
@@ -214,7 +220,10 @@ export default function PropertyResults({ properties, loading, totalResults }: P
                 </button>
                 <button 
                   onClick={() => {
-                    const message = `Hi! I'm interested in this property: ${property.address} - ${formatPrice(property.price)}. Can you provide more information?`;
+                    const addressStr = typeof property.address === 'string' 
+                      ? property.address 
+                      : `${property.address?.streetAddress || ''}, ${property.address?.city || ''}, ${property.address?.state || ''} ${property.address?.zipcode || ''}`;
+                    const message = `Hi! I'm interested in this property: ${addressStr} - ${formatPrice(property.price)}. Can you provide more information?`;
                     const whatsappUrl = `https://wa.me/17864685161?text=${encodeURIComponent(message)}`;
                     window.open(whatsappUrl, '_blank');
                   }}
