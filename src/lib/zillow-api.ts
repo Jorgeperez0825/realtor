@@ -77,7 +77,7 @@ export interface SearchResponse {
 class ZillowAPI {
   private baseURL = 'https://zillow-com1.p.rapidapi.com';
 
-  private async makeRequest(endpoint: string, params: Record<string, any> = {}) {
+  private async makeRequest(endpoint: string, params: Record<string, string | number | boolean> = {}) {
     const url = new URL(endpoint, this.baseURL);
     
     // Add parameters to URL
@@ -121,7 +121,7 @@ class ZillowAPI {
   }
 
   async searchProperties(filters: SearchFilters): Promise<SearchResponse> {
-    const params: Record<string, any> = {
+    const params: Record<string, string | number | boolean> = {
       location: filters.location || 'Orlando, FL',
     };
 
@@ -191,11 +191,11 @@ class ZillowAPI {
       try {
         console.log('🔍 Trying /propertyExtendedSearch endpoint...');
         data = await this.makeRequest('/propertyExtendedSearch', params);
-      } catch (error) {
+      } catch {
         console.log('❌ /propertyExtendedSearch failed, trying /search...');
         try {
           data = await this.makeRequest('/search', params);
-        } catch (error2) {
+        } catch {
           console.log('❌ /search failed, trying /searchByAddress...');
           data = await this.makeRequest('/searchByAddress', params);
         }
@@ -258,28 +258,31 @@ class ZillowAPI {
     }
   }
 
-  private transformProperties(properties: any[]): ZillowProperty[] {
+  private transformProperties(properties: unknown[]): ZillowProperty[] {
     return properties.map(prop => this.transformProperty(prop)).filter(Boolean) as ZillowProperty[];
   }
 
-  private transformProperty(prop: any): ZillowProperty | null {
-    if (!prop) return null;
+  private transformProperty(prop: unknown): ZillowProperty | null {
+    if (!prop || typeof prop !== 'object') return null;
+
+    // Type guard to ensure prop is an object
+    const property = prop as Record<string, unknown>;
 
     // Debug: Log the property data to see what we're getting
-    console.log('Raw property data:', prop);
+    console.log('Raw property data:', property);
 
     // Extract photos from various possible locations in the API response
     let photos: string[] = [];
-    if (prop.photos && Array.isArray(prop.photos)) {
-      photos = prop.photos;
-    } else if (prop.imgSrc) {
-      photos = [prop.imgSrc];
-    } else if (prop.photo) {
-      photos = [prop.photo];
-    } else if (prop.image) {
-      photos = [prop.image];
-    } else if (prop.images && Array.isArray(prop.images)) {
-      photos = prop.images;
+    if (property.photos && Array.isArray(property.photos)) {
+      photos = property.photos as string[];
+    } else if (property.imgSrc) {
+      photos = [property.imgSrc as string];
+    } else if (property.photo) {
+      photos = [property.photo as string];
+    } else if (property.image) {
+      photos = [property.image as string];
+    } else if (property.images && Array.isArray(property.images)) {
+      photos = property.images as string[];
     }
 
     // Filter out invalid URLs and add protocol if missing
@@ -297,24 +300,24 @@ class ZillowAPI {
     console.log('Processed photos:', photos);
 
     return {
-      zpid: prop.zpid?.toString() || Math.random().toString(),
-      address: prop.address || prop.streetAddress || 'Address not available',
-      price: prop.price || prop.unformattedPrice || prop.rentZestimate || 0,
-      bedrooms: prop.bedrooms || prop.beds || 0,
-      bathrooms: prop.bathrooms || prop.baths || 0,
-      livingArea: prop.livingArea || prop.area || prop.sqft || 0,
-      propertyType: prop.propertyType || prop.homeType || prop.propertySubType || 'Unknown',
-      homeStatus: prop.homeStatus || prop.statusType || 'FOR_SALE',
+      zpid: (property.zpid as string)?.toString() || Math.random().toString(),
+      address: (property.address || property.streetAddress || 'Address not available') as string,
+      price: Number(property.price || property.unformattedPrice || property.rentZestimate) || 0,
+      bedrooms: Number(property.bedrooms || property.beds) || 0,
+      bathrooms: Number(property.bathrooms || property.baths) || 0,
+      livingArea: Number(property.livingArea || property.area || property.sqft) || 0,
+      propertyType: (property.propertyType || property.homeType || property.propertySubType || 'Unknown') as string,
+      homeStatus: (property.homeStatus || property.statusType || 'FOR_SALE') as string,
       photoCount: photos.length,
       photos: photos,
-      latitude: prop.latitude || prop.lat || 0,
-      longitude: prop.longitude || prop.lng || 0,
-      city: prop.city || '',
-      state: prop.state || '',
-      zipcode: prop.zipcode || prop.zip || '',
-      yearBuilt: prop.yearBuilt,
-      lotSize: prop.lotSize,
-      priceHistory: prop.priceHistory || []
+      latitude: Number(property.latitude || property.lat) || 0,
+      longitude: Number(property.longitude || property.lng) || 0,
+      city: (property.city || '') as string,
+      state: (property.state || '') as string,
+      zipcode: (property.zipcode || property.zip || '') as string,
+      yearBuilt: Number(property.yearBuilt) || undefined,
+      lotSize: Number(property.lotSize) || undefined,
+      priceHistory: (property.priceHistory || []) as unknown[]
     };
   }
 

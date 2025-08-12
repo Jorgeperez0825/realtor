@@ -1,19 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ZillowProperty, zillowAPI } from '@/lib/zillow-api';
 import { 
   XMarkIcon,
   MapPinIcon, 
   HomeIcon, 
-  CameraIcon,
   CalendarDaysIcon,
-  CurrencyDollarIcon,
   BuildingOfficeIcon,
   SwatchIcon,
   HeartIcon,
-  EyeIcon,
-  TruckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ShareIcon,
@@ -31,7 +28,7 @@ export default function PropertyDetails({ property, isOpen, onClose }: PropertyD
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const [detailedProperty, setDetailedProperty] = useState<ZillowProperty>(property);
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
 
   // Fetch additional details when modal opens
   useEffect(() => {
@@ -164,10 +161,11 @@ export default function PropertyDetails({ property, isOpen, onClose }: PropertyD
               <div className="relative">
                 <div className="aspect-video rounded-xl overflow-hidden bg-gray-100">
                   {displayProperty.photos && displayProperty.photos.length > 0 ? (
-                    <img
+                    <Image
                       src={displayProperty.photos[currentImageIndex]}
                       alt={`Property ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
@@ -212,10 +210,11 @@ export default function PropertyDetails({ property, isOpen, onClose }: PropertyD
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
-                        <img
+                        <Image
                           src={photo}
                           alt={`Thumbnail ${index + 1}`}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
                         />
                       </button>
                     ))}

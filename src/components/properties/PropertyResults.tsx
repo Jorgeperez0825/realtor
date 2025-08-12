@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ZillowProperty } from '@/lib/zillow-api';
 import { HeartIcon, MapPinIcon, HomeIcon, CameraIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
@@ -116,12 +117,12 @@ export default function PropertyResults({ properties, loading, totalResults }: P
             {/* Property Image */}
             <div className="relative h-48 overflow-hidden">
               {getPropertyImage(property) ? (
-                <img
+                <Image
                   src={getPropertyImage(property)!}
                   alt={property.address}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
                   onError={() => handleImageError(property.zpid)}
-                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center">

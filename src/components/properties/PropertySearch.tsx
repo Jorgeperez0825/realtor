@@ -10,7 +10,6 @@ import {
   BuildingOfficeIcon,
   SwatchIcon,
   HeartIcon,
-  TruckIcon,
   EyeIcon
 } from '@heroicons/react/24/outline';
 import { zillowAPI, ZillowProperty } from '@/lib/zillow-api';
@@ -101,9 +100,37 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
   // Handle reset trigger from parent component
   useEffect(() => {
     if (resetTrigger) {
-      handleReset();
+      setFilters({
+        location: '',
+        listingType: '',
+        propertyType: '',
+        priceRange: '',
+        bedrooms: '',
+        bathrooms: '',
+        minSquareFeet: '',
+        maxSquareFeet: '',
+        minLotSize: '',
+        maxLotSize: '',
+        minYearBuilt: '',
+        maxYearBuilt: '',
+        sortBy: '',
+        hasPool: false,
+        hasAirConditioning: false,
+        onWaterfront: false,
+        hasParking: false,
+        hasLaundry: false,
+        allowsCats: false,
+        allowsSmallDogs: false,
+        allowsLargeDogs: false,
+        hasView: '',
+        availableFrom: ''
+      });
+      setProperties([]);
+      setTotalResults(0);
+      setHasSearched(false);
+      onSearchStateChange?.(false);
     }
-  }, [resetTrigger]);
+  }, [resetTrigger, onSearchStateChange]);
 
   const listingTypes = [
     { value: '', label: 'All Listings' },
