@@ -98,31 +98,67 @@ export default function PropertyDetails({ property, isOpen, onClose }: PropertyD
   ];
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
       <div className="min-h-screen px-4 py-8">
-        <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden animate-in slide-in-from-bottom-8 duration-500 ease-out">
           
-          {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 text-white relative">
-            <div className="flex items-center justify-between">
-                          <div className="flex-1">
-              <h1 className="text-2xl font-bold mb-1">{formatPrice(displayProperty.price)}</h1>
-              <div className="flex items-center gap-2 text-blue-100">
-                <MapPinIcon className="h-4 w-4" />
-                <span>
-                  {typeof displayProperty.address === 'string' 
-                    ? displayProperty.address 
-                    : `${displayProperty.address?.streetAddress || ''}, ${displayProperty.address?.city || ''}, ${displayProperty.address?.state || ''} ${displayProperty.address?.zipcode || ''}`
-                  }
-                </span>
-              </div>
+          {/* Enhanced Header */}
+          <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 px-8 py-6 text-white relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'radial-gradient(circle at 25% 25%, white 1px, transparent 1px)',
+                backgroundSize: '20px 20px'
+              }}></div>
             </div>
+            
+            <div className="relative flex items-center justify-between">
+              <div className="flex-1 pr-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold">
+                    {displayProperty.homeStatus.replace('_', ' ')}
+                  </div>
+                  <div className="px-3 py-1 rounded-full bg-green-500/80 text-xs font-semibold">
+                    Available Now
+                  </div>
+                </div>
+                <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                  {formatPrice(displayProperty.price)}
+                </h1>
+                <div className="flex items-center gap-2 text-blue-100 text-lg">
+                  <MapPinIcon className="h-5 w-5" />
+                  <span>
+                    {typeof displayProperty.address === 'string' 
+                      ? displayProperty.address 
+                      : `${displayProperty.address?.streetAddress || ''}, ${displayProperty.address?.city || ''}, ${displayProperty.address?.state || ''} ${displayProperty.address?.zipcode || ''}`
+                    }
+                  </span>
+                </div>
+                
+                {/* Property Stats */}
+                <div className="flex items-center gap-6 mt-4 text-blue-100">
+                  <div className="flex items-center gap-1">
+                    <span className="font-bold text-xl text-white">{displayProperty.bedrooms}</span>
+                    <span className="text-sm">beds</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <span className="font-bold text-xl text-white">{displayProperty.bathrooms}</span>
+                    <span className="text-sm">baths</span>
+                  </div>
+                  {displayProperty.livingArea > 0 && (
+                    <div className="flex items-center gap-1">
+                      <span className="font-bold text-xl text-white">{formatArea(displayProperty.livingArea)}</span>
+                      <span className="text-sm">sqft</span>
+                    </div>
+                  )}
+                </div>
+              </div>
               
-              <div className="flex items-center gap-3">
-                {/* Favorite Button */}
+              <div className="flex items-center gap-2">
+                {/* Enhanced Action Buttons */}
                 <button
                   onClick={() => setIsFavorite(!isFavorite)}
-                  className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                  className="p-3 rounded-xl bg-white/20 hover:bg-white/30 transition-all duration-300 hover:scale-110 backdrop-blur-sm shadow-lg"
                 >
                   {isFavorite ? (
                     <HeartSolidIcon className="h-6 w-6 text-red-400" />
@@ -131,20 +167,17 @@ export default function PropertyDetails({ property, isOpen, onClose }: PropertyD
                   )}
                 </button>
 
-                {/* Share Button */}
-                <button className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                <button className="p-3 rounded-xl bg-white/20 hover:bg-white/30 transition-all duration-300 hover:scale-110 backdrop-blur-sm shadow-lg">
                   <ShareIcon className="h-6 w-6" />
                 </button>
 
-                {/* Print Button */}
-                <button className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                <button className="p-3 rounded-xl bg-white/20 hover:bg-white/30 transition-all duration-300 hover:scale-110 backdrop-blur-sm shadow-lg">
                   <PrinterIcon className="h-6 w-6" />
                 </button>
 
-                {/* Close Button */}
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                  className="p-3 rounded-xl bg-red-500/20 hover:bg-red-500/30 transition-all duration-300 hover:scale-110 backdrop-blur-sm shadow-lg ml-2"
                 >
                   <XMarkIcon className="h-6 w-6" />
                 </button>

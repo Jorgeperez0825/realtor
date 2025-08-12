@@ -66,18 +66,60 @@ export default function PropertyResults({ properties, loading, totalResults }: P
 
   if (loading) {
     return (
-      <div className="w-full max-w-6xl mx-auto mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, index) => (
-            <div key={index} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 animate-pulse">
-              <div className="bg-white/20 h-48 rounded-xl mb-4"></div>
-              <div className="space-y-3">
-                <div className="bg-white/20 h-4 rounded w-3/4"></div>
-                <div className="bg-white/20 h-4 rounded w-1/2"></div>
-                <div className="bg-white/20 h-4 rounded w-2/3"></div>
+      <div className="w-full max-w-7xl mx-auto mt-8">
+        {/* Loading Header */}
+        <div className="mb-8">
+          <div className="bg-white/10 backdrop-blur-md rounded-xl h-6 w-64 animate-pulse mb-2"></div>
+          <div className="bg-white/10 backdrop-blur-md rounded-lg h-4 w-48 animate-pulse"></div>
+        </div>
+
+        {/* Enhanced Loading Skeleton Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+          {[...Array(8)].map((_, index) => (
+            <div key={index} className="bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden border border-white/20 animate-pulse">
+              {/* Image Skeleton */}
+              <div className="bg-white/20 h-56 mb-0">
+                <div className="w-full h-full bg-gradient-to-br from-white/10 to-white/30 animate-pulse"></div>
+              </div>
+              
+              {/* Content Skeleton */}
+              <div className="p-6 space-y-4">
+                {/* Title and Location */}
+                <div className="space-y-2">
+                  <div className="bg-white/20 h-5 rounded w-4/5 animate-pulse"></div>
+                  <div className="bg-white/20 h-4 rounded w-3/5 animate-pulse"></div>
+                </div>
+                
+                {/* Description */}
+                <div className="space-y-2">
+                  <div className="bg-white/20 h-3 rounded w-full animate-pulse"></div>
+                  <div className="bg-white/20 h-3 rounded w-4/5 animate-pulse"></div>
+                  <div className="bg-white/20 h-3 rounded w-3/5 animate-pulse"></div>
+                </div>
+                
+                {/* Features Grid */}
+                <div className="grid grid-cols-2 gap-2 pt-2">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="bg-white/20 h-8 rounded-lg animate-pulse"></div>
+                  ))}
+                </div>
+                
+                {/* Buttons */}
+                <div className="grid grid-cols-2 gap-3 pt-4">
+                  <div className="bg-white/20 h-12 rounded-xl animate-pulse"></div>
+                  <div className="bg-white/20 h-12 rounded-xl animate-pulse"></div>
+                </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Loading Indicator */}
+        <div className="flex items-center justify-center mt-12">
+          <div className="flex items-center gap-3 text-white/70">
+            <div className="animate-spin rounded-full h-6 w-6 border-2 border-white/30 border-t-white/70"></div>
+            <span className="text-sm font-medium">Loading properties...</span>
+          </div>
         </div>
       </div>
     );
@@ -85,30 +127,88 @@ export default function PropertyResults({ properties, loading, totalResults }: P
 
   if (!properties.length) {
     return (
-      <div className="w-full max-w-6xl mx-auto mt-8 text-center">
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-12 border border-white/20">
-          <HomeIcon className="h-16 w-16 text-white/60 mx-auto mb-4" />
-          <h3 className="text-2xl font-semibold text-white mb-2">No Properties Found</h3>
-          <p className="text-white/70">Try adjusting your search criteria to find more properties.</p>
+      <div className="w-full max-w-4xl mx-auto mt-12 text-center">
+        <div className="bg-white/10 backdrop-blur-md rounded-3xl p-16 border border-white/20">
+          <div className="mb-8">
+            <div className="relative">
+              <HomeIcon className="h-24 w-24 text-white/40 mx-auto mb-6" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
+            </div>
+            <h3 className="text-3xl font-bold text-white mb-4">No Properties Found</h3>
+            <p className="text-white/70 text-lg leading-relaxed max-w-md mx-auto">
+              We couldn&apos;t find any properties matching your criteria. Try adjusting your filters or search location.
+            </p>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-3 justify-center mb-8">
+              <span className="text-white/60 text-sm font-medium">Try searching for:</span>
+              {['Orlando Downtown', 'Luxury Homes', 'Condos', 'Under $500K', 'New Construction'].map((suggestion) => (
+                <button
+                  key={suggestion}
+                  className="px-4 py-2 rounded-full bg-white/10 text-white/80 text-sm hover:bg-white/20 transition-all duration-200 border border-white/20 hover:scale-105"
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
+                Clear All Filters
+              </button>
+              <button className="border border-white/20 hover:bg-white/10 text-white px-8 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105">
+                Browse All Properties
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-8">
-      {/* Results Header */}
-      <div className="mb-6">
-        <h3 className="text-2xl font-semibold text-white mb-2">
-          {totalResults.toLocaleString()} Properties Found
-        </h3>
-        <p className="text-white/70">
-          Showing {properties.length} of {totalResults} results
-        </p>
+    <div className="w-full max-w-7xl mx-auto mt-8">
+      {/* Enhanced Results Header */}
+      <div className="mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div>
+            <h3 className="text-3xl font-bold text-white mb-2">
+              {totalResults.toLocaleString()} Properties Found
+            </h3>
+            <p className="text-white/70 text-lg">
+              Showing {properties.length} of {totalResults.toLocaleString()} results
+            </p>
+          </div>
+          
+          {/* View Toggle and Sort Options */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <button className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+              </button>
+              <button className="p-2 rounded-lg bg-white/5 text-white/60 hover:bg-white/10 hover:text-white transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+            
+            <select className="bg-white/10 border border-white/20 text-white rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <option value="relevance">Best Match</option>
+              <option value="price_low">Price: Low to High</option>
+              <option value="price_high">Price: High to Low</option>
+              <option value="newest">Newest First</option>
+              <option value="size">Square Footage</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      {/* Properties Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Enhanced Properties Grid with Better Responsive Design */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6 lg:gap-8">
         {properties.map((property) => (
           <div
             key={property.zpid}
@@ -240,12 +340,25 @@ export default function PropertyResults({ properties, loading, totalResults }: P
         ))}
       </div>
 
-      {/* Load More Button (if there are more results) */}
+      {/* Enhanced Load More Section */}
       {properties.length < totalResults && (
-        <div className="text-center mt-8">
-          <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-300 border border-white/20">
-            Load More Properties
-          </button>
+        <div className="text-center mt-12">
+          <div className="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10">
+            <p className="text-white/70 text-sm mb-4">
+              Showing {properties.length} of {totalResults.toLocaleString()} properties
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Load More Properties
+              </button>
+              <button className="border border-white/20 hover:bg-white/10 text-white px-6 py-4 rounded-xl font-medium transition-all duration-300 hover:scale-105">
+                View All Results
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

@@ -404,37 +404,49 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      {/* Main Search Bar */}
-      <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 mb-6 shadow-2xl border border-white/20">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
-          {/* Location Search */}
+      {/* Enhanced Main Search Bar */}
+      <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 mb-8 shadow-2xl border border-white/20 hover:border-white/30 transition-all duration-300">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-end">
+          {/* Enhanced Location Search */}
           <div className="relative">
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="block text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <MapPinIcon className="h-4 w-4" />
               Location
             </label>
             <div className="relative">
-              <MapPinIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <MapPinIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="Orlando, FL"
+                placeholder="Enter city, neighborhood, or ZIP code"
                 value={filters.location}
                 onChange={(e) => handleInputChange('location', e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/90 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500"
+                className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/95 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-500 font-medium shadow-sm hover:shadow-md transition-all duration-200"
               />
+              {filters.location && (
+                <button
+                  onClick={() => handleInputChange('location', '')}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-200 transition-colors"
+                >
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
 
-          {/* Listing Type */}
+          {/* Enhanced Listing Type */}
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="block text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <BuildingOfficeIcon className="h-4 w-4" />
               Listing Type
             </label>
             <div className="relative">
-              <BuildingOfficeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <BuildingOfficeIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <select
                 value={filters.listingType}
                 onChange={(e) => handleInputChange('listingType', e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/90 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 appearance-none"
+                className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/95 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 appearance-none font-medium shadow-sm hover:shadow-md transition-all duration-200"
               >
                 {listingTypes.map((type) => (
                   <option key={type.value} value={type.value}>
@@ -442,20 +454,26 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
                   </option>
                 ))}
               </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
           </div>
 
-          {/* Property Type */}
+          {/* Enhanced Property Type */}
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="block text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <HomeIcon className="h-4 w-4" />
               Property Type
             </label>
             <div className="relative">
-              <HomeIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <HomeIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <select
                 value={filters.propertyType}
                 onChange={(e) => handleInputChange('propertyType', e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/90 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 appearance-none"
+                className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/95 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 appearance-none font-medium shadow-sm hover:shadow-md transition-all duration-200"
               >
                 {propertyTypes.map((type) => (
                   <option key={type.value} value={type.value}>
@@ -463,20 +481,26 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
                   </option>
                 ))}
               </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
           </div>
 
-          {/* Price Range */}
+          {/* Enhanced Price Range */}
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">
+            <label className="block text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <CurrencyDollarIcon className="h-4 w-4" />
               Price Range
             </label>
             <div className="relative">
-              <CurrencyDollarIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <CurrencyDollarIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <select
                 value={filters.minPrice}
                 onChange={(e) => handleInputChange('minPrice', e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/90 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 appearance-none"
+                className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/95 border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 appearance-none font-medium shadow-sm hover:shadow-md transition-all duration-200"
               >
                 {priceRanges.map((range) => (
                   <option key={range.value} value={range.value}>
@@ -484,17 +508,32 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
                   </option>
                 ))}
               </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
             </div>
           </div>
 
-          {/* Search Button */}
-          <div className="flex gap-2">
+          {/* Enhanced Search Button */}
+          <div className="flex gap-3">
             <button
               onClick={handleSearch}
-              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+              disabled={loading}
+              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-500 disabled:to-gray-600 text-white px-8 py-4 rounded-xl font-bold hover:scale-105 disabled:scale-100 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 min-w-[140px]"
             >
-              <MagnifyingGlassIcon className="h-5 w-5" />
-              Search
+              {loading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white"></div>
+                  <span>Searching...</span>
+                </>
+              ) : (
+                <>
+                  <MagnifyingGlassIcon className="h-5 w-5" />
+                  <span>Search</span>
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -796,18 +835,30 @@ export default function PropertySearch({ onSearchStateChange, resetTrigger }: Pr
         )}
       </div>
 
-      {/* Quick Search Tags */}
-      <div className="flex flex-wrap gap-3 justify-center">
-        <span className="text-white/60 text-sm font-medium">Popular searches:</span>
-        {['Orlando Downtown', 'Luxury Condos', 'Family Homes', 'Investment Properties', 'Waterfront'].map((tag) => (
-          <button
-            key={tag}
-            onClick={() => handleQuickSearch(tag)}
-            className="px-4 py-2 rounded-full bg-white/10 text-white/80 text-sm hover:bg-white/20 transition-all duration-200 border border-white/20"
-          >
-            {tag}
-          </button>
-        ))}
+      {/* Enhanced Quick Search Tags */}
+      <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+        <div className="text-center mb-4">
+          <span className="text-white/70 text-sm font-semibold">Popular Searches</span>
+        </div>
+        <div className="flex flex-wrap gap-3 justify-center">
+          {[
+            { label: 'Orlando Downtown', icon: '🏙️' },
+            { label: 'Luxury Condos', icon: '✨' },
+            { label: 'Family Homes', icon: '🏡' },
+            { label: 'Investment Properties', icon: '💰' },
+            { label: 'Waterfront', icon: '🌊' },
+            { label: 'New Construction', icon: '🔨' }
+          ].map((tag) => (
+            <button
+              key={tag.label}
+              onClick={() => handleQuickSearch(tag.label)}
+              className="group flex items-center gap-2 px-4 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white text-sm font-medium transition-all duration-300 border border-white/20 hover:border-white/30 hover:scale-105 shadow-sm hover:shadow-md"
+            >
+              <span className="group-hover:scale-110 transition-transform duration-200">{tag.icon}</span>
+              <span>{tag.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Property Results */}
